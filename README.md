@@ -1,10 +1,8 @@
-# Plant Defiency AI Detection Application - Svelte Version
+# Plant Defiency AI Detection Application - Svelte UI
 
-This application leverages Google's Generative AI capabilities to process images of plants with deficiencies. It provides two endpoints, one for handling image URLs and another for image files.
+This application leverages Google's Generative AI capabilities to process images of plants with deficiencies.
 
-Recently added the go server which is becoming the primary server.
-
-
+Recently added the go server which is becoming the primary server. - https://github.com/sammorton11/ai_image_processing_server
 
 
 <img width="1508" alt="Screen Shot 2024-02-26 at 9 28 48 PM" src="https://github.com/sammorton11/svelte-plant-detection-ui/assets/86651172/458868aa-6bac-4dbc-a3bd-e2d26d91e0fa">
