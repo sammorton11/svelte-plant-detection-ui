@@ -1,48 +1,77 @@
-# Svelte + TS + Vite
+# Plant Defiency AI Detection Application - Svelte Version
 
-This template should help get you started developing with Svelte and TypeScript in Vite.
+This application leverages Google's Generative AI capabilities to process images of plants with deficiencies. It provides two endpoints, one for handling image URLs and another for image files.
 
-## Recommended IDE Setup
+Recently added the go server which is becoming the primary server.
 
-[VS Code](https://code.visualstudio.com/) + [Svelte](https://marketplace.visualstudio.com/items?itemName=svelte.svelte-vscode).
+## Dependencies
 
-## Need an official Svelte framework?
+    google.generativeai: Provides access to Google's Generative AI capabilities.
+    
+    imageio.v2: A library for reading and writing images.
+    
+    Flask: A web framework for creating web applications in Python.
+    
+    flask_cors: Flask extension for handling Cross-Origin Resource Sharing (CORS).
+    
+    PIL (Python Imaging Library): Used for working with images.
+    
+    dotenv: A library for reading variables from a .env file.
+    
+    logging: Python's logging module for logging messages.
+    
+    os: A module for interacting with the operating system.
 
-Check out [SvelteKit](https://github.com/sveltejs/kit#readme), which is also powered by Vite. Deploy anywhere with its serverless-first approach and adapt to various platforms, with out of the box support for TypeScript, SCSS, and Less, and easily-added support for mdsvex, GraphQL, PostCSS, Tailwind CSS, and more.
 
-## Technical considerations
+## Configuration
 
-**Why use this over SvelteKit?**
+    Environment Variables:
+        Create a .env file and add your API key:
 
-- It brings its own routing solution which might not be preferable for some users.
-- It is first and foremost a framework that just happens to use Vite under the hood, not a Vite app.
+        env
 
-This template contains as little as possible to get started with Vite + TypeScript + Svelte, while taking into account the developer experience with regards to HMR and intellisense. It demonstrates capabilities on par with the other `create-vite` templates and is a good starting point for beginners dipping their toes into a Vite + Svelte project.
+        API_KEY=your_google_generative_ai_api_key
 
-Should you later need the extended capabilities and extensibility provided by SvelteKit, the template has been structured similarly to SvelteKit so that it is easy to migrate.
+    Google Generative AI Setup:
+        Configure the Google Generative AI with the obtained API key.
+        Initialize a Generative Model called 'gemini-pro-vision'.
 
-**Why `global.d.ts` instead of `compilerOptions.types` inside `jsconfig.json` or `tsconfig.json`?**
+## Flask App Setup
 
-Setting `compilerOptions.types` shuts out all other types not explicitly listed in the configuration. Using triple-slash references keeps the default TypeScript setting of accepting type information from the entire workspace, while also adding `svelte` and `vite/client` type information.
+    Create a Flask app and set up Cross-Origin Resource Sharing (CORS).
+    Configure logging for the app.
 
-**Why include `.vscode/extensions.json`?**
+## Helper Functions
 
-Other templates indirectly recommend extensions via the README, but this file allows VS Code to prompt the user to install the recommended extension upon opening the project.
+    read_image(path):
+    Reads an image from a local path using imageio and converts it to a PIL Image object.
 
-**Why enable `allowJs` in the TS template?**
+    send_image_file(image):
+    Sends an image file to the Google Generative AI model and returns the response as a dictionary.
 
-While `allowJs: false` would indeed prevent the use of `.js` files in the project, it does not prevent the use of JavaScript syntax in `.svelte` files. In addition, it would force `checkJs: false`, bringing the worst of both worlds: not being able to guarantee the entire codebase is TypeScript, and also having worse typechecking for the existing JavaScript. In addition, there are valid use cases in which a mixed codebase may be relevant.
+    send_image_url(image_path):
+    Reads an image from a specified path, sends it to the model, and returns the response as a dictionary.
 
-**Why is HMR not preserving my local component state?**
+    string_to_dict(response_string):
+    Parses the response string from the model and converts it into a dictionary.
 
-HMR state preservation comes with a number of gotchas! It has been disabled by default in both `svelte-hmr` and `@sveltejs/vite-plugin-svelte` due to its often surprising behavior. You can read the details [here](https://github.com/rixo/svelte-hmr#svelte-hmr).
+## Flask Routes
 
-If you have state that's important to retain within a component, consider creating an external store which would not be replaced by HMR.
+    /:
+    Defines a route for handling POST requests. Expects a JSON payload with an "image_url" parameter, sends the image to the model, and returns the AI-generated response as JSON.
 
-```ts
-// store.ts
-// An extremely simple external store
-import { writable } from 'svelte/store'
-export default writable(0)
-```
-# svelte-plant-detection-ui
+    /process_image:
+    Defines a route for handling POST requests with an image file. Reads the image, sends it to the model, and returns the AI-generated response as JSON.
+
+## Main Block
+
+    Runs the Flask app on port 5000 in debug mode if the script is executed directly.
+
+![Screen Shot 2024-02-18 at 2 02 32 AM](https://github.com/sammorton11/ai_image_processing_server/assets/86651172/35cd2c3f-7f37-4661-b6c5-ccf883ab7a1c)
+![Screen Shot 2024-02-18 at 2 05 55 AM](https://github.com/sammorton11/ai_image_processing_server/assets/86651172/55c53084-520c-4826-9157-6048e0d01f10)
+
+![Screen Shot 2024-02-18 at 2 03 09 AM](https://github.com/sammorton11/ai_image_processing_server/assets/86651172/d90294f3-425f-44fb-aa51-9e604259faea)
+![Screen Shot 2024-02-18 at 2 06 07 AM](https://github.com/sammorton11/ai_image_processing_server/assets/86651172/1aabe0cf-7341-48fa-accb-64caff4f5787)
+
+
+
